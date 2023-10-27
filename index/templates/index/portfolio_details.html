@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+<!-- Load Index Extras -->
+{% load index_extras %}
+<!-- Page Title -->
+{% block title %}
+<title>{{portfolio.name}}</title>
+{% endblock title %}
+<!-- Page Content  -->
+{% block content %}
+<!-- start banner Area -->
+<section class="banner-area relative" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white">Project Details</h1>
+        <p class="text-white link-nav">
+          <a href="{% url 'index:home' %}">Home </a>
+          <span class="lnr lnr-arrow-right"></span>
+          <a href="#"> Project Details</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start project-details Area -->
+<section class="project-details-area section-gap">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 project-details-left">
+        <img class="img-fluid" src="{{portfolio.image.url}}" alt="" />
+      </div>
+      <div class="col-lg-6 project-details-right">
+        <h3 class="pb-20">{{portfolio.name}}</h3>
+        <p>{{portfolio.description}}</p>
+        <div class="details-info d-flex flex-row">
+          <ul class="names">
+            <li>Rating</li>
+            <li>Client</li>
+            <li>Website</li>
+            <li>Completed</li>
+          </ul>
+          <ul class="desc">
+            <li>
+              <div class="star">
+                : {% for star in portfolio.rating|integer_range%}
+                <span class="fa fa-star checked"></span>
+                {% endfor %}
+              </div>
+            </li>
+            <li>: {{portfolio.client}}</li>
+            <li>: {{portfolio.url}}</li>
+            <li>: {{portfolio.completed}}</li>
+          </ul>
+        </div>
+        <!-- <div class="social-links mt-30">
+          <a href="#"><i class="fa fa-facebook"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-dribbble"></i></a>
+          <a href="#"><i class="fa fa-behance"></i></a>
+          <a href="#"><i class="fa fa-linkedin"></i></a>
+        </div> -->
+      </div>
+      <div class="col-lg-12 project-desc mt-60">
+        <p>{{portfolio.description}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End project-details Area -->
+
+<!-- Start brands Area -->
+<section class="brands-area pb-60 pt-60">
+  <div class="container no-padding">
+    <div class="brand-wrap">
+      <div
+        class="row align-items-center active-brand-carusel justify-content-start no-gutters"
+      >
+        {% for partner in partners %}
+        <div class="col single-brand">
+          <a href="{{partner.url}}"
+            ><img class="mx-auto" src="{{partner.image.url}}" alt=""
+          /></a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End brands Area -->
+{% endblock content %}

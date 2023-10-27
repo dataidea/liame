@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+<!-- Load Static -->
+{% load static %}
+<!-- Load Index Extras -->
+{% load index_extras %}
+<!-- Site Title -->
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+<!-- Page Content -->
+{% block content %}
+<!-- start banner Area -->
+<section class="banner-area relative" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div
+      class="row fullscreen d-flex justify-content-center align-items-center"
+    >
+      <div class="banner-content col-lg-9 col-md-12 justify-content-center">
+        <h1>{{ companyinfo.highlight }}</h1>
+        <p class="text-white mx-auto">{{ companyinfo.description }}</p>
+        <a href="#" class="primary-btn header-btn text-uppercase mt-10"
+          >Get Started</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start service Area -->
+<section class="service-area section-gap" id="service">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 pb-50 header-text text-center">
+        <h1 class="mb-10">What we offer to our clients</h1>
+        <p>Who are in extreme love with our eco friendly system..</p>
+      </div>
+    </div>
+    <div class="row">
+      {% for service in services %}
+      <div class="col-lg-4">
+        <div class="single-service">
+          <a href="#"><h4>{{service.name}}</h4></a>
+          <p>{{service.description}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- End service Area -->
+
+<!-- Start gallery Area -->
+<section class="gallery-area pb-120">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 pb-40 header-text text-center">
+        <h1 class="pb-10">Our Recent Works may impress you</h1>
+        <p>Who are in extremely love with eco friendly system.</p>
+      </div>
+    </div>
+    <div class="row">
+      {% for portfolio in portfolios %}
+      <div class="col-lg-6">
+        <div class="single-gallery">
+          <div class="content">
+            <a
+              href="{% url 'index:portfolio_details' portfolio.id %}"
+              target="_blank"
+            >
+              <div class="content-overlay"></div>
+              <img
+                class="content-image img-fluid d-block mx-auto"
+                src="{{portfolio.image.url}}"
+                alt=""
+              />
+              <div class="content-details fadeIn-bottom">
+                <h3 class="content-title mx-auto">{{portfolio.name}}</h3>
+                <a
+                  href="{% url 'index:portfolio_details' portfolio.id %}"
+                  class="primary-btn text-uppercase mt-20"
+                  >More Details</a
+                >
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- End gallery Area -->
+
+<!-- Start feature Area -->
+<section class="feature-area section-gap">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 pb-40 header-text text-center">
+        <h1 class="pb-10 text-white">Some Features that Made us Unique</h1>
+        <p class="text-white">
+          Who are in extremely love with eco friendly system.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      {% for feature in features %}
+      <div class="col-lg-4 col-md-6">
+        <div class="single-feature">
+          <a href="#" class="title d-flex flex-row align-items-center">
+            <span class="lnr lnr-license"></span>
+            <h4>{{ feature.name }}</h4>
+          </a>
+          <p>{{feature.description}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- End feature Area -->
+
+<!-- Start testimonial Area -->
+<section class="testimonial-area pt-120">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="menu-content pb-70 col-lg-8">
+        <div class="title text-center">
+          <h1 class="mb-10">Testimonial from our Clients</h1>
+          <p>Who are in extremely love with eco friendly system.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="active-testimonial-carusel">
+        {% for testimonial in testimonials %}
+        <div class="single-testimonial item d-flex flex-row">
+          <div class="thumb">
+            <img class="img-fluid" src="{{testimonial.image.url}}" alt="" />
+          </div>
+          <div class="desc">
+            <p>{{testimonial.testimony}}</p>
+            <h4 mt-30>{{testimonial.name}}</h4>
+            <div class="star">
+              {% for star in testimonial.rating|integer_range%}
+              <span class="fa fa-star checked"></span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End testimonial Area -->
+
+<!-- Start callto-action Area -->
+<section class="callto-action-area pt-120">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="callto-action-wrap col-lg-12 relative section-gap">
+        <div class="content">
+          <h1>{{companyinfo.quote_highlight}}</h1>
+          <p class="mx-auto">{{companyinfo.quote_description}}</p>
+          <a href="#" class="primary-btn text-uppercase">Request quote now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End callto-action Area -->
+
+<!-- Start blog Area -->
+<section class="blog-area section-gap">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="menu-content pb-60 col-lg-9">
+        <div class="title text-center">
+          <h1 class="mb-10">Ongoing Exhibitions from the scratch</h1>
+          <p>Who are in extremely love with eco friendly system.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="active-blog-carusel">
+        {% for exhibition in exhibitions %}
+        <div class="single-blog-post item">
+          <div class="thumb">
+            <img class="img-fluid" src="{{exhibition.image.url}}" alt="" />
+          </div>
+          <div class="details">
+            <div class="tags">
+              <ul>
+                <li>
+                  <a href="#">{{exhibition.category}}</a>
+                </li>
+              </ul>
+            </div>
+            <a href="#"><h4 class="title">Creative Outdoor Ads</h4></a>
+            <p>{{exhibition.description}}</p>
+            <h6 class="date">{{exhibition.completed}}</h6>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End blog Area -->
+
+<!-- Start brands Area -->
+<section class="brands-area pb-60 pt-60">
+  <div class="container no-padding">
+    <div class="brand-wrap">
+      <div
+        class="row align-items-center active-brand-carusel justify-content-start no-gutters"
+      >
+        {% for partner in partners %}
+        <div class="col single-brand">
+          <a href="{{partner.url}}"
+            ><img class="mx-auto" src="{{partner.image.url}}" alt=""
+          /></a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End brands Area -->
+{% endblock content%}
