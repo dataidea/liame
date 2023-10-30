@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'index',
     'accounts.apps.AccountsConfig',
     # allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
     # django apps
     'django.contrib.auth',
     'django.contrib.sites',
@@ -74,7 +74,7 @@ ROOT_URLCONF = 'liame.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates', ],
+        'DIRS': ['/home/liamedesigns/liame/templates','templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
