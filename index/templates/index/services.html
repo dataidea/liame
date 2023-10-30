@@ -5,7 +5,7 @@
 {% load index_extras %}
 <!-- Site Title -->
 {% block title %}
-<title>Home</title>
+<title>Services</title>
 {% endblock title %}
 <!-- Page Content -->
 {% block content %}
@@ -32,8 +32,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 pb-50 header-text text-center">
-        <h1 class="mb-10">What we offer to our clients</h1>
-        <p>Who are in extreme love with our eco friendly system..</p>
+        <h1 class="mb-10">{{companyinfo.services_highlight}}</h1>
+        <p>{{companyinfo.services_description}}</p>
       </div>
     </div>
     <div class="row">
@@ -79,7 +79,7 @@
 <!-- End feature Area -->
 
 <!-- Start callto-action Area -->
-<section class="callto-action-area pt-120">
+<section class="callto-action-area section-gap">
   <div class="container">
     <div class="row justify-content-center">
       <div class="callto-action-wrap col-lg-12 relative section-gap">
@@ -93,4 +93,24 @@
   </div>
 </section>
 <!-- End callto-action Area -->
+
+<!-- Start brands Area -->
+<section class="brands-area pb-60 pt-60">
+  <div class="container no-padding">
+    <div class="brand-wrap">
+      <div
+        class="row align-items-center active-brand-carusel justify-content-start no-gutters"
+      >
+        {% for partner in partners %}
+        <div class="col single-brand">
+          <a href="{{partner.url}}"
+            ><img class="mx-auto" src="{{partner.image.url}}" alt=""
+          /></a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End brands Area -->
 {% endblock content%}

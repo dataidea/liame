@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+<!-- Load Static -->
+{% load static %}
+<!-- Load Index Extras -->
+{% load index_extras %}
+<!-- Site Title -->
+{% block title %}
+<title>Projects</title>
+{% endblock title %}
+<!-- Page Content -->
+{% block content %}
+
+<!-- start banner Area -->
+<section class="banner-area relative" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white">Projects</h1>
+        <p class="text-white link-nav">
+          <a href="">Home </a>
+          <span class="lnr lnr-arrow-right"></span>
+          <a href="#"> Projects</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start gallery Area -->
+<section class="gallery-area section-gap">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 pb-40 header-text text-center">
+        <h1 class="pb-10">{{companyinfo.projects_highlight}}</h1>
+        <p>{{companyinfo.projects_description}}</p>
+      </div>
+    </div>
+    <div class="row">
+      {% for portfolio in portfolios %}
+      <div class="col-lg-6">
+        <div class="single-gallery">
+          <div class="content">
+            <a
+              href="{% url 'index:portfolio_details' portfolio.id %}"
+              target="_blank"
+            >
+              <div class="content-overlay"></div>
+              <img
+                class="content-image img-fluid d-block mx-auto"
+                src="{{portfolio.image.url}}"
+                alt=""
+              />
+              <div class="content-details fadeIn-bottom">
+                <h3 class="content-title mx-auto">{{portfolio.name}}</h3>
+                <a
+                  href="{% url 'index:portfolio_details' portfolio.id %}"
+                  class="primary-btn text-uppercase mt-20"
+                  >More Details</a
+                >
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- End gallery Area -->
+
+<!-- Start brands Area -->
+<section class="brands-area pb-60 pt-60">
+  <div class="container no-padding">
+    <div class="brand-wrap">
+      <div
+        class="row align-items-center active-brand-carusel justify-content-start no-gutters"
+      >
+        {% for partner in partners %}
+        <div class="col single-brand">
+          <a href="{{partner.url}}"
+            ><img
+              class="mx-auto"
+              src="{{partner.image.url}}"
+              alt="{{partner.name}}"
+          /></a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End brands Area -->
+
+{% endblock content %}

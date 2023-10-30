@@ -1,9 +1,11 @@
-# from .models import Testimonial
+import markdown
 from .models import (TermOfService, PrivacyPolicy, Feedback)
 from django.shortcuts import (render, redirect, get_object_or_404)
-from .models import (Service, Contact, Feature, Exhibition,
+from .models import (Service, Contact, Feature,
                      Partner, Portfolio, Testimonial, 
                      FrequentlyAskedQuestion, CompanyInfo)
+from .forms import FeedbackForm
+from blog.models import Blog
 
 # Create your views here.
 def home(request):
@@ -11,21 +13,21 @@ def home(request):
     contacts = Contact.objects.all()
     features = Feature.objects.all()
     partners = Partner.objects.all()
-    exhibitions = Exhibition.objects.all()
     portfolios = Portfolio.objects.all()
     testimonials = Testimonial.objects.all()
     faqs = FrequentlyAskedQuestion.objects.all()
     companyinfo = CompanyInfo.objects.get(
         name="Liame Designs")
+    blogs = Blog.objects.all().order_by('-pk')[:6]
     
     context = {
         'faqs': faqs,
+        'blogs': blogs,
         'services': services,
         'contacts': contacts,
         'features': features,
         'partners': partners,
         'portfolios': portfolios,
-        'exhibitions': exhibitions,
         'companyinfo': companyinfo,
         'testimonials': testimonials,
     }
@@ -35,6 +37,24 @@ def home(request):
                   template_name=template_name, 
                   context=context)
 
+def portfolio(request):
+    portfolio = Portfolio.objects.all()
+    partners = Partner.objects.all()
+    companyinfo = CompanyInfo.objects.get(
+        name="Liame Designs")
+    contacts = Contact.objects.all()
+    features = Feature.objects.all()
+
+    context = {'portfolios':portfolio, 
+               'partners':partners,
+               'companyinfo':companyinfo,
+               'features':features,
+               'contacts':contacts}
+    
+    template_name = 'index/portfolio.html'
+    return render(request=request, 
+                  template_name=template_name, 
+                  context=context)
 
 def portfolioDetails(request, id):
     portfolio = Portfolio.objects.get(id=id)
@@ -44,6 +64,7 @@ def portfolioDetails(request, id):
     partners = Partner.objects.all()
 
     context = {'portfolio':portfolio, 
+               'description': markdown.markdown(portfolio.description),
                'companyinfo':companyinfo,
                'partners':partners,
                'contacts':contacts}
@@ -56,12 +77,14 @@ def portfolioDetails(request, id):
 
 def services(request):
     services = Service.objects.all()
+    partners = Partner.objects.all()
     companyinfo = CompanyInfo.objects.get(
         name="Liame Designs")
     contacts = Contact.objects.all()
     features = Feature.objects.all()
 
     context = {'services':services, 
+               'partners':partners,
                'companyinfo':companyinfo,
                'features':features,
                'contacts':contacts}
@@ -76,8 +99,14 @@ def about(request):
         name="Liame Designs")
     contacts = Contact.objects.all()
     features = Feature.objects.all()
+    partners = Partner.objects.all()
+    testimonials = Testimonial.objects.all()
+    blogs = Blog.objects.all().order_by('-pk')[:6]
 
     context = {'about':about, 
+               'blogs':blogs,
+               'partners':partners,
+               'testimonials':testimonials,
                'companyinfo':companyinfo,
                'features':features,
                'contacts':contacts}
@@ -87,23 +116,35 @@ def about(request):
                   template_name=template_name, 
                   context=context)
 
-def feedback(request):
-    try:
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
-        
-        feedback = Feedback(name=name, email=email, 
-                            subject=subject, message=message)
-        feedback.save()
-    
-        context = {'message': f'Thank you for contacting us {name}. We will get in touch as soon as possible.'}
-    except Exception as e:
-        context = {'message': f'Something went wrong. Please try again later.'}
+def contact(request):    
+    companyinfo = CompanyInfo.objects.get(
+        name="Liame Designs")
+    contacts = Contact.objects.all()
+    features = Feature.objects.all()
 
-    template_name='components/message.html'
-    return render(request=request, template_name=template_name, context=context)
+    context = {'companyinfo':companyinfo,
+               'features':features,
+               'contacts':contacts,}
+
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context['message'] = 'Thanks for contacting us, We will get back to you as soon as possible'
+            template_name = 'message.html'
+            return render(request=request,
+                          template_name=template_name,
+                          context=context)
+                          
+        else:
+            context['errors'] = form.errors
+    else:
+        context['form'] = FeedbackForm()
+
+    template_name = 'index/contact.html'
+    return render(request=request, 
+                  template_name=template_name, 
+                  context=context)
 
 
 def termsOfService(request):

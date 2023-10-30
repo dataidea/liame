@@ -8,7 +8,11 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}" />
+    <link
+      rel="shortcut icon"
+      href="{{companyinfo.logo.url}}"
+      type="image/x-icon"
+    />
     <!-- Author Meta -->
     <meta name="author" content="Juma Shafara" />
     <!-- Meta Description -->
@@ -44,8 +48,12 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-6 col-sm-6 col-4 header-top-left no-padding">
-              <a href="tel:+953 012 3654 896">+953 012 3654 896</a>
-              <a href="mailto:support@colorlib.com">support@colorlib.com</a>
+              <a href="tel:{{companyinfo.telephone}}"
+                >{{companyinfo.telephone}}</a
+              >
+              <a href="mailto:{{companyinfo.support_email}}"
+                >{{companyinfo.support_email}}</a
+              >
             </div>
             <div class="col-lg-6 col-sm-6 col-8 header-top-right no-padding">
               <ul>
@@ -65,7 +73,7 @@
         <div class="row align-items-center justify-content-between d-flex">
           <div id="logo">
             <a href="/"
-              ><img src="{% static 'img/logo.png' %}" alt="" title=""
+              ><img src="{{companyinfo.logo.url}}" alt="" title=""
             /></a>
           </div>
           <nav id="nav-menu-container">
@@ -73,29 +81,12 @@
               <li class="menu-active"><a href="/">Home</a></li>
               <li><a href="{% url 'index:about' %}">About</a></li>
               <li><a href="{% url 'index:services' %}">Services</a></li>
-              <li><a href="projects.html">Projects</a></li>
-              <li class="menu-has-children">
-                <a href="">Blog</a>
-                <ul>
-                  <li><a href="blog-home.html">Blog Home</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>
-                </ul>
+              <li><a href="{% url 'index:portfolio' %}">Projects</a></li>
+              <li class="">
+                <a href="{% url 'blog:blogs' %}">Blog</a>
               </li>
-              <li class="menu-has-children">
-                <a href="">Pages</a>
-                <ul>
-                  <li><a href="project-details.html">Project Details</a></li>
-                  <li><a href="elements.html">Elements</a></li>
-                  <li class="menu-has-children">
-                    <a href="">Level 2 </a>
-                    <ul>
-                      <li><a href="#">Item One</a></li>
-                      <li><a href="#">Item Two</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="{% url 'index:contact' %}">Contact</a></li>
+              <li><a href="/admin" target="_blank">Administer</a></li>
             </ul>
           </nav>
           <!-- #nav-menu-container -->

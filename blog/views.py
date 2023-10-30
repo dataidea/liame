@@ -1,36 +1,37 @@
-import requests
 import markdown
 from . models import Blog
+from . models import BlogPage
 from django.db.models import Q
-from . models import BlogComment
 from django.shortcuts import render
-from django.shortcuts import redirect
-from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
+from index.models import (CompanyInfo,Contact)
 
 
 # Create your views here.
-
-
 def blogs(request):
+    companyinfo = CompanyInfo.objects.all()[0]
+    contacts = Contact.objects.all()
     # Fetch Blogs
-    blogs = Blog.objects.all()
-
-    # Sort
-    sorted_blogs = sorted(blogs, key=lambda k: k.popularity, reverse=True)
+    blogs = Blog.objects.all().order_by('-pk')
+    blog_set = BlogPage.objects.all()[0]
 
     # pagination
-    paginator = Paginator(sorted_blogs, 8)
+    paginator = Paginator(blogs, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'blogs': page_obj}
-    template_name = 'blog/blogs.html'
+    context = {
+        'blogs': page_obj,
+        'companyinfo': companyinfo,
+        'contacts':contacts
+        }
+    template_name = 'blog/blog-home.html'
     return render(request=request, template_name=template_name, context=context)
 
 
 def blogDetails(request):
+    companyinfo = CompanyInfo.objects.all()[0]
+    contacts = Contact.objects.all()
     # Fetch Blog Details
     try:
         blog = Blog.objects.get(slug=request.GET.get('slug'))
@@ -39,60 +40,30 @@ def blogDetails(request):
         context = {'state': 'danger', 'message': 'Blog not found'}
         template_name = 'components/message.html'
         return render(request=request, template_name=template_name, context=context)
-    # Fetch Blog Comments
-    comments = BlogComment.objects.filter(blog=blog)
 
     
     context = {
         'blog': blog, 
         'details': markdown.markdown(blog.content_markdown), 
-        'comments': comments,
-        'related': related[:4]
+        'related': related[:4],
+        'companyinfo':companyinfo,
+        'contacts':contacts
         }
-    return render(request, 'blog/blog_details.html', context=context)
-
-
-# Comments
-@login_required(login_url='accounts:signin')
-def comment(request):
-
-    if request.user.is_anonymous:
-        user = User.objects.get(id=12)
-    else:
-        user = request.user
-
-    try:
-        comment = BlogComment(
-            comment = request.POST.get(key='comment'),
-            blog = Blog.objects.get(slug=request.POST.get(key='slug')),
-            user = user
-        )
-
-        comment.save()
-        return redirect(request.META.get('HTTP_REFERER'))
-    except Exception as e:
-        print(e)
-        context = {'message': 'An error occured while trying to add your comment', 'state':  'danger'}
-        template_name = 'components/message.html'
-        return render(request=request, template_name=template_name, context=context)
-    
+    return render(request, 'blog/blog-single.html', context=context)
 
 def search(request):
     query = request.POST.get(key='query')
     blogs = Blog.objects.filter(
         Q(title__icontains=query) |
-        Q(content_markdown__icontains=query)|
-        Q(category_id=query)
+        Q(content_markdown__icontains=query)
     )
+    blog_set = BlogPage.objects.all()[0]
 
-     # Sort
-    sorted_blogs = sorted(blogs, key=lambda k: k.popularity, reverse=True)
+    # pagination
+    paginator = Paginator(blogs, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-     # pagination
-    # paginator = Paginator(sorted_blogs, 4)
-    # page_number = request.GET.get('page')
-    # page_obj = paginator.get_page(page_number)
-
-    context = {'blogs': sorted_blogs}
-    template_name = 'blog/blogs.html'
+    context = {'blogs': page_obj, 'blog_set': blog_set}
+    template_name = 'blog/blog-home.html'
     return render(request=request, template_name=template_name, context=context)

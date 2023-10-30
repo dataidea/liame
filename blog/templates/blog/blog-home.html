@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+<!-- Load Static -->
+{% load static %}
+<!-- Load Index Extras -->
+{% load index_extras %}
+<!-- Site Title -->
+{% block title %}
+<title>{{blog.title}}</title>
+{% endblock title %}
+<!-- Page Content -->
+{% block content %}
+
+<!-- start banner Area -->
+<section class="banner-area relative blog-home-banner" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content blog-header-content col-lg-12">
+        <h1 class="text-white">{{companyinfo.blog_highlight}}</h1>
+        <p class="text-white">{{companyinfo.blog_description}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start post-content Area -->
+<section class="post-content-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 posts-list">
+        {% if blogs %} {% for blog in blogs %}
+        <div class="single-post row">
+          <div class="col-lg-3 col-md-3 meta-details">
+            <ul class="tags">
+              <li><a href="#">{{blog.category}}</a></li>
+            </ul>
+            <div class="user-details row">
+              <p class="user-name col-lg-12 col-md-12 col-6">
+                <a href="#">{{blog.author}}</a>
+                <span class="lnr lnr-user"></span>
+              </p>
+              <p class="date col-lg-12 col-md-12 col-6">
+                <a href="#">{{blog.date_featured}}</a>
+                <span class="lnr lnr-calendar-full"></span>
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-9">
+            <div class="feature-img">
+              <img class="img-fluid" src="{{blog.image.url}}" alt="" />
+            </div>
+            <a
+              class="posts-title"
+              href="{% url 'blog:blog_details'%}?slug={{blog.slug}}"
+              ><h3>{{blog.title}}</h3></a
+            >
+            <p class="excert">{{blog.brief}}</p>
+            <a
+              href="{% url 'blog:blog_details'%}?slug={{blog.slug}}"
+              class="primary-btn"
+              >View More</a
+            >
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <!-- Start Sample Area -->
+        <section class="sample-text-area">
+          <div class="container">
+            <h3 class="text-heading">No blogs Found</h3>
+            <p class="sample-text">Try searching another</p>
+          </div>
+        </section>
+        {% endif %}
+        <!-- Pagination -->
+        <div class="pagination col-md-6 m-auto">
+          <span
+            class="step-links d-flex justify-content-between p-3 border m-2 mt-3 rounded w-100"
+            style="background: #fafaff"
+          >
+            {% if blogs.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ blogs.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+              Page {{ blogs.number }}
+              <!-- Current number -->
+              of
+              <!-- Total number -->
+              {{ blogs.paginator.num_pages}}.
+            </span>
+
+            {% if blogs.has_next %}
+            <a href="?page={{ blogs.next_page_number }}">Next</a>
+            <a href="?page={{ blogs.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+        <!-- End of Pagination -->
+      </div>
+      <div class="col-lg-4 sidebar-widgets">
+        <div class="widget-wrap">
+          <div class="single-sidebar-widget search-widget">
+            <form
+              class="search-form"
+              action="{% url 'blog:search'%}"
+              method="post"
+            >
+              <!-- CSRF Token -->
+              {% csrf_token %}
+              <input
+                placeholder="Search Posts"
+                name="query"
+                type="text"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Search Posts'"
+              />
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+          <div class="single-sidebar-widget ads-widget">
+            <a href="#"
+              ><img class="img-fluid" src="img/blog/ads-banner.jpg" alt=""
+            /></a>
+          </div>
+          <div class="single-sidebar-widget post-category-widget">
+            <h4 class="category-title">Post Catgories</h4>
+            <ul class="cat-list">
+              {% for category in categories %}
+              <li>
+                <a href="#" class="d-flex justify-content-between">
+                  <p>{{category}}</p>
+                  <!-- <p>37</p> -->
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End post-content Area -->
+
+{% endblock content %}

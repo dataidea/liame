@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+<!-- Load Static -->
+{% load static %}
+<!-- Load Index Extras -->
+{% load index_extras %}
+<!-- Site Title -->
+{% block title %}
+<title>About</title>
+{% endblock title %}
+<!-- Page Content -->
+{% block content %}
+<!-- start banner Area -->
+<section class="banner-area relative" id="home">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white">Message</h1>
+        <p class="text-white link-nav">
+          <a href="/">Home </a>
+          <span class="lnr lnr-arrow-right"></span>
+          <a href="#"> Message</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+<!-- Start Sample Area -->
+<section class="sample-text-area">
+  <div class="container">
+    <h3 class="text-heading">Hello there...</h3>
+    <p class="sample-text">{{message}}</p>
+  </div>
+</section>
+<!-- Start contact-page Area -->
+<section class="contact-page-area section-gap">
+  <div class="container">
+    <div class="row">
+      <iframe
+        class="map-wrap"
+        style="width: 100%; height: 445px"
+        id="map"
+        src="{{companyinfo.google_map}}"
+        frameborder="0"
+      ></iframe>
+      <div class="col-lg-4 d-flex flex-column address-wrap">
+        <div class="single-contact-address d-flex flex-row">
+          <div class="icon">
+            <span class="lnr lnr-home"></span>
+          </div>
+          <div class="contact-details">
+            <h5>{{companyinfo.address}}</h5>
+            <p>Come visit us at our home</p>
+          </div>
+        </div>
+        <div class="single-contact-address d-flex flex-row">
+          <div class="icon">
+            <span class="lnr lnr-phone-handset"></span>
+          </div>
+          <div class="contact-details">
+            <h5>{{companyinfo.telephone}}</h5>
+            <p>Mon to Fri 9am to 6 pm</p>
+          </div>
+        </div>
+        <div class="single-contact-address d-flex flex-row">
+          <div class="icon">
+            <span class="lnr lnr-envelope"></span>
+          </div>
+          <div class="contact-details">
+            <h5>{{companyinfo.support_email}}</h5>
+            <p>Send us your query anytime!</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <form
+          class="form-area"
+          id="myForm"
+          action="{% url 'index:contact' %}"
+          method="post"
+          class="contact-form text-right"
+        >
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-lg-6 form-group">
+              <!-- Name -->
+              {{form.name}}
+              <!-- name errors -->
+              <p class="danger">{{form.name.error}}</p>
+              <!-- email -->
+              {{form.email}}
+              <!-- email errors -->
+              <p class="danger">{{form.email.error}}</p>
+              <!-- subject -->
+              {{form.subject}}
+              <!-- subject errors -->
+              <p class="danger">{{form.subject.error}}</p>
+            </div>
+            <div class="col-lg-6 form-group">
+              <!-- message -->
+              {{form.message}}
+              <!-- message errors -->
+              <p class="danger">{{form.message.error}}</p>
+            </div>
+            <div class="col-lg-12">
+              <div class="alert-msg" style="text-align: left"></div>
+              <button class="genric-btn primary circle" style="float: right">
+                Send Message
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End contact-page Area -->
+
+{% endblock content %}

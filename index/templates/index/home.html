@@ -17,10 +17,14 @@
       class="row fullscreen d-flex justify-content-center align-items-center"
     >
       <div class="banner-content col-lg-9 col-md-12 justify-content-center">
-        <h1>{{ companyinfo.highlight }}</h1>
-        <p class="text-white mx-auto">{{ companyinfo.description }}</p>
-        <a href="#" class="primary-btn header-btn text-uppercase mt-10"
-          >Get Started</a
+        <h1>{{ companyinfo.home_page_highlight }}</h1>
+        <p class="text-white mx-auto">
+          {{ companyinfo.home_page_description }}
+        </p>
+        <a
+          href="{% url 'index:contact' %}"
+          class="primary-btn header-btn text-uppercase mt-10"
+          >Contact Us Now</a
         >
       </div>
     </div>
@@ -164,7 +168,9 @@
         <div class="content">
           <h1>{{companyinfo.quote_highlight}}</h1>
           <p class="mx-auto">{{companyinfo.quote_description}}</p>
-          <a href="#" class="primary-btn text-uppercase">Request quote now</a>
+          <a href="{% url 'index:contact' %}" class="primary-btn text-uppercase"
+            >Request quote now</a
+          >
         </div>
       </div>
     </div>
@@ -185,22 +191,22 @@
     </div>
     <div class="row">
       <div class="active-blog-carusel">
-        {% for exhibition in exhibitions %}
+        {% for blog in blogs %}
         <div class="single-blog-post item">
           <div class="thumb">
-            <img class="img-fluid" src="{{exhibition.image.url}}" alt="" />
+            <img class="img-fluid" src="{{blog.image.url}}" alt="" />
           </div>
           <div class="details">
             <div class="tags">
               <ul>
                 <li>
-                  <a href="#">{{exhibition.category}}</a>
+                  <a href="#">{{blog.category}}</a>
                 </li>
               </ul>
             </div>
-            <a href="#"><h4 class="title">Creative Outdoor Ads</h4></a>
-            <p>{{exhibition.description}}</p>
-            <h6 class="date">{{exhibition.completed}}</h6>
+            <a href="#"><h4 class="title">{{blog.title}}</h4></a>
+            <p>{{blog.brief}}</p>
+            <h6 class="date">{{blog.date_featured}}</h6>
           </div>
         </div>
         {% endfor %}

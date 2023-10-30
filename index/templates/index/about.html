@@ -33,17 +33,24 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6 about-video-left">
-        <h6 class="text-uppercase">Brand new app to blow your mind</h6>
+        <h6 class="text-uppercase">who are we?</h6>
         <h1>{{companyinfo.about_us_highlight}}</h1>
         <p>{{companyinfo.about_us_description}}</p>
-        <a class="primary-btn mt-30" href="#">Get Started Now</a>
+        <a class="primary-btn mt-30" href="{% url 'index:contact' %}"
+          >Contact Us Now</a
+        >
       </div>
       <div
         class="col-lg-6 about-video-right justify-content-center align-items-center d-flex relative"
       >
         <div class="overlay overlay-bg"></div>
-        <a class="play-btn" href="https://www.youtube.com/watch?v=ARA0AxrnHdM"
-          ><img class="img-fluid mx-auto" src="img/play-btn.png" alt=""
+        <a
+          class="play-btn"
+          href="https://www.youtube.com/watch?v={{companyinfo.introductory_video}}"
+          ><img
+            class="img-fluid mx-auto"
+            src="{% static 'img/play-btn.png' %}"
+            alt=""
         /></a>
       </div>
     </div>
@@ -63,78 +70,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-6">
-        <div class="single-feature">
-          <a href="#" class="title d-flex flex-row align-items-center">
-            <span class="lnr lnr-user"></span>
-            <h4>Expert Technicians</h4>
-          </a>
-          <p>
-            Computer users and programmers have become so accustomed to using
-            Windows, even for the changing.
-          </p>
-        </div>
-      </div>
+      {% for feature in features %}
       <div class="col-lg-4 col-md-6">
         <div class="single-feature">
           <a href="#" class="title d-flex flex-row align-items-center">
             <span class="lnr lnr-license"></span>
-            <h4>Professional Service</h4>
+            <h4>{{ feature.name }}</h4>
           </a>
-          <p>
-            Finding the perfect learning tool for Flash is a daunting task to
-            any novice web developer. One can find help.
-          </p>
+          <p>{{feature.description}}</p>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="single-feature">
-          <a href="#" class="title d-flex flex-row align-items-center">
-            <span class="lnr lnr-phone"></span>
-            <h4>Great Support</h4>
-          </a>
-          <p>
-            While most people enjoy casino ambling, sports betting, lottery and
-            bingo playing for the fun and excitement.
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="single-feature">
-          <a href="#" class="title d-flex flex-row align-items-center">
-            <span class="lnr lnr-rocket"></span>
-            <h4>Technical Skills</h4>
-          </a>
-          <p>
-            “The moment you think of buying a Web Hosting Plan, you know one
-            thing – So many choices, which one to choose.
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="single-feature">
-          <a href="#" class="title d-flex flex-row align-items-center">
-            <span class="lnr lnr-diamond"></span>
-            <h4>Highly Recomended</h4>
-          </a>
-          <p>
-            Many conventional colleges and universities are now offering online
-            DVD repair courses, which are the exact same.
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="single-feature">
-          <a href="#" class="title d-flex flex-row align-items-center">
-            <span class="lnr lnr-bubble"></span>
-            <h4>Positive Reviews</h4>
-          </a>
-          <p>
-            So you have your new digital camera and clicking away to glory
-            anything and everything in sight. Now you want.
-          </p>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -153,82 +99,22 @@
     </div>
     <div class="row">
       <div class="active-testimonial-carusel">
+        {% for testimonial in testimonials %}
         <div class="single-testimonial item d-flex flex-row">
           <div class="thumb">
-            <img class="img-fluid" src="img/elements/user1.png" alt="" />
+            <img class="img-fluid" src="{{testimonial.image.url}}" alt="" />
           </div>
           <div class="desc">
-            <p>
-              Accessories Here you can find the best computer accessory for your
-              laptop, monitor, printer, scanner, speaker, projector, hardware.
-            </p>
-            <h4 mt-30>Mark Alviro Wiens</h4>
+            <p>{{testimonial.testimony}}</p>
+            <h4 mt-30>{{testimonial.name}}</h4>
             <div class="star">
+              {% for star in testimonial.rating|integer_range%}
               <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
+              {% endfor %}
             </div>
           </div>
         </div>
-        <div class="single-testimonial item d-flex flex-row">
-          <div class="thumb">
-            <img class="img-fluid" src="img/elements/user2.png" alt="" />
-          </div>
-          <div class="desc">
-            <p>
-              Hypnosis quit smoking methods maintain caused quite world over the
-              last two decades. There is a lot of argument pertaining to
-            </p>
-            <h4 mt-30>Lina Harrington</h4>
-            <div class="star">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-            </div>
-          </div>
-        </div>
-        <div class="single-testimonial item d-flex flex-row">
-          <div class="thumb">
-            <img class="img-fluid" src="img/elements/user1.png" alt="" />
-          </div>
-          <div class="desc">
-            <p>
-              Accessories Here you can find the best computer accessory for your
-              laptop, monitor, printer, scanner, speaker, projector, hardware.
-            </p>
-            <h4 mt-30>Mark Alviro Wiens</h4>
-            <div class="star">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-            </div>
-          </div>
-        </div>
-        <div class="single-testimonial item d-flex flex-row">
-          <div class="thumb">
-            <img class="img-fluid" src="img/elements/user2.png" alt="" />
-          </div>
-          <div class="desc">
-            <p>
-              Hypnosis quit smoking methods maintain caused quite world over the
-              last two decades. There is a lot of argument pertaining to
-            </p>
-            <h4 mt-30>Lina Harrington</h4>
-            <div class="star">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -241,15 +127,11 @@
     <div class="row justify-content-center">
       <div class="callto-action-wrap col-lg-12 relative section-gap">
         <div class="content">
-          <h1>
-            Looking for a <br />
-            quality and affordable interior design?
-          </h1>
-          <p class="mx-auto">
-            inappropriate behavior is often laughed off as “boys will be boys,”
-            women face higher conduct standards especially in the workplace.
-          </p>
-          <a href="#" class="primary-btn text-uppercase">Request quote now</a>
+          <h1>{{companyinfo.quote_highlight}}</h1>
+          <p class="mx-auto">{{companyinfo.quote_description}}</p>
+          <a href="{% url 'index:contact' %}" class="primary-btn text-uppercase"
+            >Request quote now</a
+          >
         </div>
       </div>
     </div>
@@ -270,148 +152,25 @@
     </div>
     <div class="row">
       <div class="active-blog-carusel">
+        {% for blog in blogs %}
         <div class="single-blog-post item">
           <div class="thumb">
-            <img class="img-fluid" src="img/b1.jpg" alt="" />
+            <img class="img-fluid" src="{{blog.image.url}}" alt="" />
           </div>
           <div class="details">
             <div class="tags">
               <ul>
                 <li>
-                  <a href="#">Travel</a>
-                </li>
-                <li>
-                  <a href="#">Life Style</a>
+                  <a href="#">{{blog.category}}</a>
                 </li>
               </ul>
             </div>
-            <a href="#"><h4 class="title">Low Cost Advertising</h4></a>
-            <p>
-              Acres of Diamonds… you’ve read the famous story, or at least had
-              it related to you. A farmer.
-            </p>
-            <h6 class="date">31st January,2018</h6>
+            <a href="#"><h4 class="title">{{blog.title}}</h4></a>
+            <p>{{blog.brief}}</p>
+            <h6 class="date">{{blog.date_featured}}</h6>
           </div>
         </div>
-        <div class="single-blog-post item">
-          <div class="thumb">
-            <img class="img-fluid" src="img/b2.jpg" alt="" />
-          </div>
-          <div class="details">
-            <div class="tags">
-              <ul>
-                <li>
-                  <a href="#">Travel</a>
-                </li>
-                <li>
-                  <a href="#">Life Style</a>
-                </li>
-              </ul>
-            </div>
-            <a href="#"><h4 class="title">Creative Outdoor Ads</h4></a>
-            <p>
-              Acres of Diamonds… you’ve read the famous story, or at least had
-              it related to you. A farmer.
-            </p>
-            <h6 class="date">31st January,2018</h6>
-          </div>
-        </div>
-        <div class="single-blog-post item">
-          <div class="thumb">
-            <img class="img-fluid" src="img/b3.jpg" alt="" />
-          </div>
-          <div class="details">
-            <div class="tags">
-              <ul>
-                <li>
-                  <a href="#">Travel</a>
-                </li>
-                <li>
-                  <a href="#">Life Style</a>
-                </li>
-              </ul>
-            </div>
-            <a href="#"
-              ><h4 class="title">It's Classified How To Utilize Free</h4></a
-            >
-            <p>
-              Acres of Diamonds… you’ve read the famous story, or at least had
-              it related to you. A farmer.
-            </p>
-            <h6 class="date">31st January,2018</h6>
-          </div>
-        </div>
-        <div class="single-blog-post item">
-          <div class="thumb">
-            <img class="img-fluid" src="img/b1.jpg" alt="" />
-          </div>
-          <div class="details">
-            <div class="tags">
-              <ul>
-                <li>
-                  <a href="#">Travel</a>
-                </li>
-                <li>
-                  <a href="#">Life Style</a>
-                </li>
-              </ul>
-            </div>
-            <a href="#"><h4 class="title">Low Cost Advertising</h4></a>
-            <p>
-              Acres of Diamonds… you’ve read the famous story, or at least had
-              it related to you. A farmer.
-            </p>
-            <h6 class="date">31st January,2018</h6>
-          </div>
-        </div>
-        <div class="single-blog-post item">
-          <div class="thumb">
-            <img class="img-fluid" src="img/b2.jpg" alt="" />
-          </div>
-          <div class="details">
-            <div class="tags">
-              <ul>
-                <li>
-                  <a href="#">Travel</a>
-                </li>
-                <li>
-                  <a href="#">Life Style</a>
-                </li>
-              </ul>
-            </div>
-            <a href="#"><h4 class="title">Creative Outdoor Ads</h4></a>
-            <p>
-              Acres of Diamonds… you’ve read the famous story, or at least had
-              it related to you. A farmer.
-            </p>
-            <h6 class="date">31st January,2018</h6>
-          </div>
-        </div>
-        <div class="single-blog-post item">
-          <div class="thumb">
-            <img class="img-fluid" src="img/b3.jpg" alt="" />
-          </div>
-          <div class="details">
-            <div class="tags">
-              <ul>
-                <li>
-                  <a href="#">Travel</a>
-                </li>
-                <li>
-                  <a href="#">Life Style</a>
-                </li>
-              </ul>
-            </div>
-            <a href="#"
-              ><h4 class="title">It's Classified How To Utilize Free</h4></a
-            >
-            <p>
-              Acres of Diamonds… you’ve read the famous story, or at least had
-              it related to you. A farmer.
-            </p>
-            <h6 class="date">31st January,2018</h6>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -425,21 +184,13 @@
       <div
         class="row align-items-center active-brand-carusel justify-content-start no-gutters"
       >
+        {% for partner in partners %}
         <div class="col single-brand">
-          <a href="#"><img class="mx-auto" src="img/l1.png" alt="" /></a>
+          <a href="{{partner.url}}"
+            ><img class="mx-auto" src="{{partner.image.url}}" alt=""
+          /></a>
         </div>
-        <div class="col single-brand">
-          <a href="#"><img class="mx-auto" src="img/l2.png" alt="" /></a>
-        </div>
-        <div class="col single-brand">
-          <a href="#"><img class="mx-auto" src="img/l3.png" alt="" /></a>
-        </div>
-        <div class="col single-brand">
-          <a href="#"><img class="mx-auto" src="img/l4.png" alt="" /></a>
-        </div>
-        <div class="col single-brand">
-          <a href="#"><img class="mx-auto" src="img/l5.png" alt="" /></a>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>

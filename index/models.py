@@ -3,11 +3,31 @@ from django.db import models
 # Create your models here.
     
 class CompanyInfo(models.Model):
+    # general
+    logo = models.ImageField(upload_to='logos', default='logo.png')
     name = models.CharField(max_length=122, default='Liame Designs')
-    highlight = models.CharField(max_length=122, default='Precise concept design for stylish living')
-    description = models.TextField(default='If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.')
+    # contact
+    telephone = models.CharField(max_length=50, default='000000000000')
+    support_email = models.CharField(max_length=50, default='XXXXXXXXXXXXXXXXXXXXXXXX')
+    address = models.CharField(max_length=50, default='No address')
+    introductory_video = models.CharField(max_length=122, default='Introductory Video')
+    google_map = models.TextField(default='No google map')
+    # home page
+    home_page_highlight = models.CharField(max_length=122, default='Precise concept design for stylish living')
+    home_page_description = models.TextField(default='If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.')
+    # about us
     about_us_highlight = models.CharField(max_length=122, default='About Us')
     about_us_description = models.TextField(default='If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.')
+    # services
+    services_highlight = models.CharField(max_length=122, default='Services')
+    services_description = models.TextField(default='If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.')
+    # projects
+    projects_highlight = models.CharField(max_length=122, default='Projects')
+    projects_description = models.TextField(default='If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.')
+    # blog
+    blog_highlight = models.CharField(max_length=122, default='Blog')
+    blog_description = models.TextField(default='If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.')
+    # quote
     quote_highlight = models.CharField(max_length=122, default='Request for quote')
     quote_description = models.TextField(default="One of our services")
 
@@ -52,17 +72,6 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Exhibition(models.Model):
-    image = models.ImageField(upload_to='exhibitions')
-    highlight = models.CharField(max_length=122, default='Nice Exhibition')
-    description = models.TextField(default="This is a nice exhibition")
-    category = models.CharField(max_length=50, default='Category')
-    completed = models.DateField(null=True, blank=True, default=None)
-
-    def __str__(self):
-        return self.highlight
     
 
 class Partner(models.Model):
